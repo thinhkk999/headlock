@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>HEADLOCK Premium</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- SPLASH SCREEN -->
+    <div class="page splash-screen active" id="splashScreen">
+        <div class="logo-container">
+            <div class="logo-placeholder">
+                <img id="splashLogo" src="images/logo.png" alt="">
+            </div>
+            <div class="premium-text">PREMIUM</div>
+        </div>
+        <div class="tap-text">Tap anywhere to continue</div>
+    </div>
+
+    <!-- LOGIN SCREEN -->
+    <div class="page login-screen" id="loginScreen">
+        <div class="login-header">
+            <button class="back-btn" id="loginBackBtn">← Back</button>
+            <h1>HEADLOCK</h1>
+            <div class="login-logo">
+                <div class="login-logo-placeholder">
+                   <img id="loginLogo" src="images/logo.png" alt="">
+                </div>
+            </div>
+            <p class="key-login-text">KEY LOGIN</p>
+        </div>
+
+        <div class="login-form">
+            <input type="text" class="key-input" placeholder="Enter your key..." id="keyInput">
+            <button class="login-btn" id="loginBtn">LOGIN</button>
+        </div>
+
+        <div class="contact-section">
+            <h3>CONTACT</h3>
+            <div class="social-buttons">
+                <div class="social-btn zalo"><img src="images/zalo.png" alt=""></div>
+                <div class="social-btn facebook"><img style="width:80px !important;" src="images/fb.webp" alt=""></div>
+            </div>
+            <p class="footer-text">by Sajes</p>
+        </div>
+    </div>
+
+    <!-- MAIN SCREEN -->
+    <div class="page main-screen" id="mainScreen">
+        <div class="header">
+            <button class="back-btn" id="mainBackBtn">← Back</button>
+            <div class="header-title">
+                <h1>HEADLOCK</h1>
+                <p class="header-subtitle">BY SAJES</p>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="main-logo">
+                <img id="mainLogo" src="images/logo.png" alt="">
+            </div>
+
+            <div class="toggle-section">
+                <div class="toggle-item">
+                    <div class="toggle-label">
+                        <span class="toggle-icon">🎯</span>
+                        <span>REG FILES</span>
+                    </div>
+                    <div class="toggle-switch" data-toggle="reg">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+
+                <div class="toggle-item">
+                    <div class="toggle-label">
+                        <span class="toggle-icon">🚀</span>
+                        <span>BOOT RAM</span>
+                    </div>
+                    <div class="toggle-switch" data-toggle="boot">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+
+                <div class="toggle-item">
+                    <div class="toggle-label">
+                        <span class="toggle-icon">💀</span>
+                        <span>HEADLOCK</span>
+                    </div>
+                    <div class="toggle-switch" data-toggle="headlock">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+
+                <div class="toggle-item">
+                    <div class="toggle-label">
+                        <span class="toggle-icon">⚙️</span>
+                        <span>FIX RUNG</span>
+                    </div>
+                    <div class="toggle-switch" data-toggle="fix">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="start-buttons">
+                <h3>STARTING FILES</h3>
+                <div class="button-group">
+                    <button class="start-btn on" id="onBtn">ON</button>
+                    <button class="start-btn off active" id="offBtn">OFF</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INFO PANEL -->
+    <div class="info-panel" id="infoPanel">
+        <div class="info-header">
+            <h2>Info</h2>
+            <span class="close-btn" id="closeInfo">Done</span>
+        </div>
+        <div class="info-content">
+            <div class="info-item">
+                <div>
+                    <div class="info-item-text">Panel made by Sajes</div>
+                    <div class="info-item-subtext">+9779817971218</div>
+                </div>
+                <span class="info-icon"><i class="fa-solid fa-phone"></i></span>
+            </div>
+            <div class="info-item">
+                <div>
+                    <div class="info-item-text">FaceBook</div>
+                    <div class="info-item-subtext">Sajes</div>
+                </div>
+                <span class="info-icon"><i class="fa-brands fa-facebook"></i></span>
+            </div>
+            <div class="info-item">
+                <div>
+                    <div class="info-item-text">TikTok</div>
+                    <div class="info-item-subtext">@sajes_humagain</div>
+                </div>
+                <span class="info-icon"><i class="fa-brands fa-tiktok"></i></span>
+            </div>
+            <button class="update-btn">UPDATE TO NEW+</button>
+            <div class="copyright">
+                <strong>Copyright belongs to</strong>
+                <strong>Sajes Dev</strong>
+                <div style="margin-top: 10px;">Thank For Using</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SUCCESS MODAL -->
+    <div class="success-modal" id="successModal">
+        <button class="modal-btn success">
+            <span class="check-icon">✓</span>
+            <span>HeadLock Was Successful!</span>
+        </button>
+        <button class="modal-btn danger" id="turnOffBtn">
+            <span class="cross-icon">✕</span>
+            <span>Turn off HeadLock</span>
+        </button>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+    <div class="toggle-toast" id="toggleToast"></div>
+    <script>
+// ==================== CẤU HÌNH SERVER ====================
+const SERVER_URL = "https://apikeyapps-production.up.railway.app";
+const APP_TOKEN   = "APP_IF5EJ3IKKVA1JY5AKURW1FTVDX6XIFLT";
+
+// ==================== BIẾN TOÀN CỤC ====================
+let isLoggedIn = false;
+let currentKey = "";
+let deviceId = localStorage.getItem("HEADLOCK_DEVICE_ID") || generateDeviceId();
+
+function generateDeviceId() {
+  const id = "HEADLOCK-" + Date.now() + "-" + Math.random().toString(36).substr(2, 9);
+  localStorage.setItem("HEADLOCK_DEVICE_ID", id);
+  return id;
+}
+
+// ==================== GỌI SERVER KIỂM TRA KEY ====================
+async function activateKey(key) {
+  try {
+    const res = await fetch(`${SERVER_URL}/api/keys/activate`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        key: key.trim(),
+        appToken: APP_TOKEN,
+        deviceId: deviceId
+      })
+    });
+    const data = await res.json();
+    
+    return { success: res.ok && data.valid === true, data: data };
+  } catch (err) {
+    return { success: false, data: { message: "Không kết nối được server!" } };
+  }
+}
+
+// ==================== TOAST THÔNG BÁO ====================
+function showToggleToast(msg) {
+  const toast = document.getElementById("toggleToast");
+  if (!toast) return;
+  toast.textContent = msg;
+  toast.classList.add("active");
+  clearTimeout(window.toastTimeout);
+  window.toastTimeout = setTimeout(() => toast.classList.remove("active"), 2000);
+}
+
+// Tính ngày còn lại (xử lý định dạng ngày VN)
+function getDaysLeft(expiresAt) {
+  if (!expiresAt) return "vĩnh viễn";
+  
+  try {
+    const [datePart, timePart] = expiresAt.split(' ');
+    const [day, month, year] = datePart.split('/');
+    
+    const expiryDate = new Date(year, month - 1, day);
+    if (timePart) {
+      const [hours, minutes] = timePart.split(':');
+      expiryDate.setHours(parseInt(hours), parseInt(minutes));
+    }
+    
+    const now = new Date();
+    const diff = expiryDate - now;
+    const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+    
+    return days > 0 ? `${days} ngày` : (days === 0 ? "Hôm nay hết hạn" : "ĐÃ HẾT HẠN");
+  } catch (error) {
+    return "không xác định";
+  }
+}
+
+// ==================== CHUYỂN TRANG ====================
+function showPage(pageId) {
+  document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+  document.getElementById(pageId).classList.add('active');
+}
+
+// Hàm lấy tên chức năng từ data-toggle
+function getToggleName(toggleType) {
+  const names = {
+    "reg": "REG FILES",
+    "boot": "BOOT RAM", 
+    "headlock": "HEADLOCK",
+    "fix": "FIX RUNG"
+  };
+  return names[toggleType] || toggleType;
+}
+
+// ==================== DOM READY ====================
+document.addEventListener("DOMContentLoaded", async () => {
+
+  // Kiểm tra key đã lưu → tự động login
+  const savedKey = localStorage.getItem("HEADLOCK_KEY");
+  if (savedKey) {
+    const check = await activateKey(savedKey);
+    if (check.success) {
+      isLoggedIn = true;
+      currentKey = savedKey;
+      showPage("mainScreen");
+      showToggleToast(`Chào mừng quay lại! Còn ${getDaysLeft(check.data.expiresAt)}`);
+    } else {
+      localStorage.removeItem("HEADLOCK_KEY");
+      showPage("splashScreen");
+    }
+  } else {
+    showPage("splashScreen");
+  }
+
+  // ==================== SPLASH → LOGIN ====================
+  document.getElementById("splashScreen").addEventListener("click", () => {
+    showPage("loginScreen");
+    initLoginEffects();
+  });
+
+  // ==================== LOGIN KEY ====================
+  const keyInput = document.getElementById("keyInput");
+  const loginBtn = document.getElementById("loginBtn");
+
+  const handleLogin = async () => {
+    const key = keyInput.value.trim();
+    if (!key) {
+      showToggleToast("Nhập key đi bro!");
+      return;
+    }
+
+    loginBtn.disabled = true;
+    loginBtn.textContent = "Đang kiểm tra key...";
+
+    const result = await activateKey(key);
+
+    if (result.success) {
+      isLoggedIn = true;
+      currentKey = key;
+      localStorage.setItem("HEADLOCK_KEY", key);
+      keyInput.value = "";
+      showPage("mainScreen");
+      const daysLeft = getDaysLeft(result.data.expiresAt);
+      showToggleToast(`Đăng nhập thành công! Còn ${daysLeft}`);
+    } else {
+      showToggleToast(result.data.message || "Key sai hoặc hết hạn!");
+    }
+
+    loginBtn.disabled = false;
+    loginBtn.textContent = "LOGIN";
+  };
+
+  loginBtn.addEventListener("click", handleLogin);
+  keyInput.addEventListener("keypress", e => e.key === "Enter" && handleLogin());
+
+  // ==================== BACK BUTTON ====================
+  document.querySelectorAll(".back-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      if (confirm("Thoát sẽ phải nhập lại key nha!")) {
+        localStorage.removeItem("HEADLOCK_KEY");
+        isLoggedIn = false;
+        showPage("splashScreen");
+      }
+    });
+  });
+
+    // ==================== CÁC TOGGLE KHÁC (REG FILES, BOOT RAM, FIX RUNG) ====================
+  document.querySelectorAll('.toggle-switch:not([data-toggle="headlock"])').forEach(toggle => {
+    toggle.addEventListener("click", async () => {
+      if (!isLoggedIn) return showToggleToast("Chưa nhập key!");
+
+      const check = await activateKey(currentKey);
+      if (!check.success) {
+        showToggleToast("Key hết hạn!");
+        localStorage.removeItem("HEADLOCK_KEY");
+        isLoggedIn = false;
+        showPage("loginScreen");
+        return;
+      }
+
+      toggle.classList.toggle("active");
+      const label = toggle.closest(".toggle-item")?.querySelector(".toggle-label span:last-child")?.textContent || "";
+      showToggleToast(toggle.classList.contains("active") ? `Đã bật ${label}` : `Đã tắt ${label}`);
+    });
+  });
+
+  // ==================== TOGGLE HEADLOCK RIÊNG (chỉ điều khiển toggle trên, không ảnh hưởng nút dưới) ====================
+  document.querySelector('.toggle-switch[data-toggle="headlock"]')?.addEventListener("click", async () => {
+    if (!isLoggedIn) return showToggleToast("Chưa nhập key!");
+
+    const check = await activateKey(currentKey);
+    if (!check.success) {
+      showToggleToast("Key hết hạn!");
+      localStorage.removeItem("HEADLOCK_KEY");
+      isLoggedIn = false;
+      showPage("loginScreen");
+      return;
+    }
+
+    const toggle = document.querySelector('.toggle-switch[data-toggle="headlock"]');
+    toggle.classList.toggle("active");
+    showToggleToast(toggle.classList.contains("active") ? "Đã bật HEADLOCK" : "Đã tắt HEADLOCK");
+  });
+
+  // ==================== NÚT ON / OFF DƯỚI RIÊNG BIỆT (chỉ điều khiển nút + modal, không ảnh hưởng toggle trên) ====================
+  document.getElementById("onBtn")?.addEventListener("click", async () => {
+    if (!isLoggedIn) return showToggleToast("Chưa nhập key!");
+
+    const check = await activateKey(currentKey);
+    if (!check.success) {
+      showToggleToast("Key hết hạn!");
+      localStorage.removeItem("HEADLOCK_KEY");
+      isLoggedIn = false;
+      showPage("loginScreen");
+      return;
+    }
+
+    // Chỉ bật nút + modal, KHÔNG đụng vào toggle trên
+    document.getElementById("onBtn").classList.add("active");
+    document.getElementById("offBtn").classList.remove("active");
+    document.getElementById("successModal").classList.add("active");
+    document.getElementById("overlay").classList.add("active");
+    showToggleToast("Đã bật HEADLOCK");
+  });
+
+  document.getElementById("offBtn")?.addEventListener("click", () => {
+    document.getElementById("onBtn").classList.remove("active");
+    document.getElementById("offBtn").classList.add("active");
+    document.getElementById("successModal").classList.remove("active");
+    document.getElementById("overlay").classList.remove("active");
+    showToggleToast("Đã tắt HEADLOCK");
+  });
+
+  document.getElementById("turnOffBtn")?.addEventListener("click", () => {
+    document.getElementById("offBtn").click(); // Dùng lại hàm tắt ở trên
+  });
+
+  // ==================== INFO PANEL + SOCIAL ====================
+  document.getElementById("hamburger").addEventListener("click", () => {
+    document.getElementById("infoPanel").classList.add("active");
+    document.getElementById("overlay").classList.add("active");
+  });
+
+  document.getElementById("closeInfo").addEventListener("click", () => {
+    document.getElementById("infoPanel").classList.remove("active");
+    document.getElementById("overlay").classList.remove("active");
+  });
+
+  document.getElementById("overlay").addEventListener("click", () => {
+    document.getElementById("infoPanel").classList.remove("active");
+    document.getElementById("overlay").classList.remove("active");
+  });
+
+  // Social buttons
+  document.querySelector(".social-btn.zalo").addEventListener("click", () => alert("+9779817971218"));
+  document.querySelector(".social-btn.facebook").addEventListener("click", () => 
+    window.open("https://www.facebook.com/share/1BnEYXozcN/?mibextid=wwXIfr", "_blank")
+  );
+
+  document.querySelectorAll(".info-item").forEach(item => {
+    const text = item.querySelector(".info-item-text").textContent;
+    if (text === "FaceBook") item.addEventListener("click", () => window.open("https://www.facebook.com/share/1BnEYXozcN/?mibextid=wwXIfr", "_blank"));
+    if (text === "TikTok") item.addEventListener("click", () => window.open("https://www.tiktok.com/@sajes_humagain", "_blank"));
+    if (text === "Panel made by TBR") item.addEventListener("click", () => window.open("https://zalo.me/+9779817971218", "_blank"));
+  });
+
+  document.querySelector(".update-btn").addEventListener("click", () => {
+    showToggleToast("Đã là bản VIP mới nhất 2025!");
+  });
+
+  // Logo click về splash
+  document.querySelectorAll("#splashLogo, #loginLogo, #mainLogo").forEach(logo => {
+    logo.style.cursor = "pointer";
+    logo.addEventListener("click", () => showPage("splashScreen"));
+  });
+
+  // ==================== HIỆU ỨNG LOGIN SCREEN ====================
+  function initLoginEffects() {
+    createBackgroundSparkles();
+    createParticles();
+    addTitleSparkles();
+    addLogoSparkles();
+    addButtonSparkles();
+    addInputSparkles();
+    addSocialSparkles();
+    addMagicCursor();
+
+    document.querySelectorAll('.login-logo-placeholder img, .login-header h1').forEach(el => {
+      el.classList.add('enhanced-glow');
+    });
+  }
+
+  function createBackgroundSparkles() {
+    let container = document.querySelector('.sparkle-container');
+    if (container) return;
+    
+    container = document.createElement('div');
+    container.className = 'sparkle-container';
+    document.body.appendChild(container);
+
+    for (let i = 0; i < 20; i++) {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle';
+        sparkle.style.left = `${Math.random() * 100}%`;
+        sparkle.style.top = `${Math.random() * 100}%`;
+        sparkle.style.animationDelay = `${Math.random() * 5}s`;
+        container.appendChild(sparkle);
+    }
+  }
+
+  function createParticles() {
+    let container = document.querySelector('.particles');
+    if (container) return;
+    
+    container = document.createElement('div');
+    container.className = 'particles';
+    document.body.appendChild(container);
+
+    for (let i = 0; i < 50; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = `${Math.random() * 100}%`;
+        particle.style.top = `${Math.random() * 100}%`;
+        particle.style.width = `${Math.random() * 3 + 1}px`;
+        particle.style.height = `${Math.random() * 3 + 1}px`;
+        particle.style.animationDuration = `${Math.random() * 8 + 4}s`;
+        container.appendChild(particle);
+    }
+  }
+
+  function addTitleSparkles() {
+    const title = document.querySelector('.login-header h1');
+    if (!title || title.querySelector('.title-sparkle')) return;
+    
+    for (let i = 0; i < 8; i++) {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'title-sparkle';
+        sparkle.style.left = `${Math.random() * 100}%`;
+        sparkle.style.animationDelay = `${Math.random() * 2}s`;
+        title.appendChild(sparkle);
+    }
+  }
+
+  function addLogoSparkles() {
+    const logo = document.querySelector('.login-logo-placeholder');
+    if (!logo || logo.querySelector('.logo-sparkle')) return;
+    
+    const positions = [
+        { top: '0%', left: '0%' },
+        { top: '0%', left: '100%' },
+        { top: '100%', left: '0%' },
+        { top: '100%', left: '100%' }
+    ];
+    
+    positions.forEach((pos, i) => {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'logo-sparkle';
+        sparkle.style.top = pos.top;
+        sparkle.style.left = pos.left;
+        sparkle.style.animationDelay = `${i * 0.5}s`;
+        logo.appendChild(sparkle);
+    });
+  }
+
+  function addButtonSparkles() {
+    const button = document.querySelector('.login-btn');
+    if (!button || button.querySelector('.btn-sparkle')) return;
+    
+    const sparkle = document.createElement('div');
+    sparkle.className = 'btn-sparkle';
+    button.appendChild(sparkle);
+  }
+
+  function addInputSparkles() {
+    const input = document.querySelector('.key-input');
+    if (!input || input.querySelector('.input-sparkle')) return;
+    
+    const sparkle = document.createElement('div');
+    sparkle.className = 'input-sparkle';
+    input.appendChild(sparkle);
+  }
+
+  function addSocialSparkles() {
+    const socialButtons = document.querySelectorAll('.social-btn');
+    socialButtons.forEach(btn => {
+        if (btn.querySelector('.social-sparkle')) return;
+        const sparkle = document.createElement('div');
+        sparkle.className = 'social-sparkle';
+        btn.appendChild(sparkle);
+    });
+  }
+
+  function addMagicCursor() {
+    if (window.magicCursorAdded) return;
+    window.magicCursorAdded = true;
+    
+    document.addEventListener('mousemove', (e) => {
+        if (Math.random() > 0.7) {
+            const cursor = document.createElement('div');
+            cursor.className = 'magic-cursor';
+            cursor.style.left = `${e.clientX - 10}px`;
+            cursor.style.top = `${e.clientY - 10}px`;
+            document.body.appendChild(cursor);
+            setTimeout(() => cursor.remove(), 500);
+        }
+    });
+  }
+});
+</script>
+    <script>
+// Đoạn này thay thế hoàn toàn đoạn code cũ của bạn
+document.querySelector('.modal-btn.success')?.addEventListener('click', () => {
+    // 1. Đóng popup trước (giữ nguyên hiệu ứng của bạn)
+    const modal   = document.getElementById('successModal');
+    const overlay = document.getElementById('overlay');
+
+    if (modal)   modal.classList.remove('active');
+    if (overlay) overlay.classList.remove('active');
+
+    // 2. Đợi popup đóng xong rồi mới mở Free Fire (rất quan trọng để không bị Safari chặn)
+    setTimeout(() => {
+        openFreeFireApp();
+    }, 400); // 400ms là ngọt nhất – bạn có thể giảm xuống 300 nếu muốn nhanh hơn
+});
+
+// Hàm mở Free Fire cực mạnh – hoạt động ngon lành cả trong Web Clip
+function openFreeFireApp() {
+    const scheme = "freefireth://"; // URL scheme chính thức của Free Fire (2025 vẫn dùng tốt)
+    const appStore = "https://apps.apple.com/vn/app/garena-free-fire/id1300146617";
+
+    // Cách 1: Dùng iframe ẩn (cách mạnh nhất trên iOS 15–18, kể cả trong Web Clip)
+    const iframe = document.createElement("iframe");
+    iframe.style.display = "none";
+    iframe.src = scheme;
+    document.body.appendChild(iframe);
+
+    // Cách 2: Dự phòng bằng location.href (vẫn cần để chắc ăn)
+    window.location.href = scheme;
+}
+</script>
+<script>
+// CHỈ CHẶN XEM SOURCE CODE (Ctrl+U + F12 + Chuột phải View Source)
+// Các hành động khác vẫn bình thường – form admin không bị ảnh hưởng
+
+// Cửa hậu cho bạn (tuỳ chọn): thêm ?admin hoặc ?123 vào URL là tắt hết chặn
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.has('admin') || urlParams.has('123')) return;
+
+// 1. Chặn Ctrl+U / Cmd+U
+document.addEventListener('keydown', e => {
+  if ((e.ctrlKey || e.metaKey) && e.key.toUpperCase() === 'U') {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+}, true);
+
+// 2. Chặn F12 (mở DevTools)
+document.addEventListener('keydown', e => {
+  if (e.key === 'F12' || e.keyCode === 123) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+}, true);
+
+// 3. Chặn chuột phải → chỉ chặn menu "View Page Source", không chặn chọn text hay input
+document.addEventListener('contextmenu', e => {
+  // Nếu người dùng click chuột phải vào input, textarea, button → cho phép menu bình thường
+  const tag = e.target.tagName.toUpperCase();
+  if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'BUTTON' || tag === 'SELECT') {
+    return; // không chặn
+  }
+  e.preventDefault();
+}, true);
+
+</script>
+
+</body>
+</html>
