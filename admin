@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Key Server</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+html, body {
+    overflow-x: hidden;
+    width: 100%;
+}
+* {
+    border: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+
+    /* Base Styles */
+    .gradient-bg { 
+      background: linear-gradient(135deg, #01051a 0%, #0f021b 100%); 
+    }
+
+    .glass-effect { 
+      background: rgba(255, 255, 255, 0.05); 
+      backdrop-filter: blur(10px); 
+    }
+
+    .table-hover tr:hover { 
+      background-color: rgba(255,255,255,0.05); 
+    }
+
+    /* Login Styles */
+    .login-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #01051a 0%, #0f021b 100%);
+    }
+
+    .login-form {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      padding: 2.5rem;
+      border-radius: 1rem;
+      width: 24rem;
+      border: 1px solid rgba(55, 65, 81, 1);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    }
+
+    .login-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .login-title {
+      font-size: 1.875rem;
+      font-weight: bold;
+      background: linear-gradient(to right, #a78bfa, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .login-subtitle {
+      color: rgba(209, 213, 219, 1);
+      margin-top: 0.5rem;
+    }
+
+    .login-input {
+      width: 100%;
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      background-color: rgba(31, 41, 55, 1);
+      border: 1px solid rgba(55, 65, 81, 1);
+      margin-bottom: 1rem;
+      transition: all 0.3s;
+    }
+
+    .login-input:focus {
+      border-color: rgba(168, 85, 247, 1);
+      outline: none;
+      ring: 2px;
+      ring-color: rgba(168, 85, 247, 0.5);
+    }
+
+    .login-button {
+      width: 100%;
+      background: linear-gradient(to right, rgba(147, 51, 234, 1), rgba(236, 72, 153, 1));
+      padding: 1rem;
+      border-radius: 0.5rem;
+      font-weight: bold;
+      font-size: 1.125rem;
+      transition: all 0.3s;
+      transform: scale(1);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+
+    .login-button:hover {
+      background: linear-gradient(to right, rgba(126, 34, 206, 1), rgba(219, 39, 119, 1));
+      transform: scale(1.02);
+    }
+
+    /* Dashboard Styles */
+    .dashboard-container {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #01051a 0%, #0f021b 100%);
+    }
+
+    .dashboard-header {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(55, 65, 81, 1);
+    }
+
+    .header-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      background: linear-gradient(to right, #a78bfa, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .header-subtitle {
+      color: rgba(209, 213, 219, 1);
+      font-size: 0.875rem;
+    }
+
+    .header-user {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .user-greeting {
+      color: rgba(209, 213, 219, 1);
+    }
+
+    .user-name {
+      color: rgba(192, 132, 252, 1);
+    }
+
+    .logout-button {
+      background: linear-gradient(to right, rgba(220, 38, 38, 1), rgba(236, 72, 153, 1));
+      padding: 0.5rem 1.25rem;
+      border-radius: 0.5rem;
+      transition: all 0.3s;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .logout-button:hover {
+      background: linear-gradient(to right, rgba(185, 28, 28, 1), rgba(219, 39, 119, 1));
+    }
+
+    .dashboard-content {
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 1.5rem;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (min-width: 1280px) {
+      .stats-grid {
+        grid-template-columns: repeat(6, 1fr);
+      }
+    }
+
+    .stat-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 0.75rem;
+      padding: 1rem;
+      border: 1px solid rgba(55, 65, 81, 1);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+    }
+
+    .stat-icon {
+      border-radius: 9999px;
+      padding: 0.75rem;
+      margin-right: 1rem;
+    }
+
+    .stat-label {
+      color: rgba(156, 163, 175, 1);
+      font-size: 0.875rem;
+    }
+
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    /* Action Grid */
+    .action-grid {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (min-width: 1024px) {
+      .action-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .action-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      border: 1px solid rgba(55, 65, 81, 1);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+
+    .action-title {
+      font-size: 1.25rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.75rem;
+      border-radius: 0.375rem;
+      background-color: rgba(31, 41, 55, 1);
+      border: 1px solid rgba(55, 65, 81, 1);
+      margin-bottom: 0.75rem;
+      transition: all 0.3s;
+    }
+
+    .form-input:focus {
+      border-color: rgba(168, 85, 247, 1);
+      outline: none;
+      ring: 2px;
+      ring-color: rgba(168, 85, 247, 0.5);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .form-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .checkbox {
+      border-radius: 0.25rem;
+      background-color: rgba(31, 41, 55, 1);
+      border-color: rgba(55, 65, 81, 1);
+      color: rgba(168, 85, 247, 1);
+    }
+
+    .checkbox:focus {
+      ring: 2px;
+      ring-color: rgba(168, 85, 247, 0.5);
+    }
+
+    .create-package-button {
+      width: 100%;
+      background: linear-gradient(to right, rgba(22, 163, 74, 1), rgba(37, 99, 235, 1));
+      padding: 0.75rem;
+      border-radius: 0.375rem;
+      font-weight: bold;
+      transition: all 0.3s;
+      transform: scale(1);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .create-package-button:hover {
+      background: linear-gradient(to right, rgba(21, 128, 61, 1), rgba(30, 64, 175, 1));
+      transform: scale(1.02);
+    }
+
+    .create-key-button {
+      width: 100%;
+      background: linear-gradient(to right, rgba(147, 51, 234, 1), rgba(236, 72, 153, 1));
+      padding: 0.75rem;
+      border-radius: 0.375rem;
+      font-weight: bold;
+      transition: all 0.3s;
+      transform: scale(1);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .create-key-button:hover {
+      background: linear-gradient(to right, rgba(126, 34, 206, 1), rgba(219, 39, 119, 1));
+      transform: scale(1.02);
+    }
+
+    /* Package List */
+    .package-list {
+      margin-top: 1.5rem;
+    }
+
+    .package-list-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: rgba(209, 213, 219, 1);
+    }
+
+    .package-list-container {
+      max-height: 15rem;
+      overflow-y: auto;
+    }
+
+    .package-item {
+      background-color: rgba(31, 41, 55, 1);
+      border-radius: 0.5rem;
+      padding: 0.75rem;
+      margin-bottom: 0.5rem;
+      border: 1px solid rgba(55, 65, 81, 1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .package-name {
+      font-weight: 500;
+    }
+
+    .package-token {
+      font-size: 0.75rem;
+      color: rgba(156, 163, 175, 1);
+      font-family: monospace;
+      margin-top: 0.25rem;
+    }
+
+    .package-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .action-button {
+      transition: opacity 0.3s;
+    }
+
+    .action-button:hover {
+      opacity: 0.8;
+    }
+
+    .empty-state {
+      text-align: center;
+      color: rgba(107, 114, 128, 1);
+      padding: 1rem;
+    }
+
+    /* Keys Container */
+    .keys-container {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      border: 1px solid rgba(55, 65, 81, 1);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+
+    .keys-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .keys-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: rgba(229, 231, 235, 1);
+    }
+
+    .keys-actions {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .search-input {
+      padding: 0.5rem;
+      border-radius: 0.25rem;
+      background-color: rgba(31, 41, 55, 1);
+      border: 1px solid rgba(55, 65, 81, 1);
+      transition: all 0.3s;
+    }
+
+    .search-input:focus {
+      border-color: rgba(168, 85, 247, 1);
+      outline: none;
+      ring: 2px;
+      ring-color: rgba(168, 85, 247, 0.5);
+    }
+
+    .refresh-button {
+      background: linear-gradient(to right, rgba(37, 99, 235, 1), rgba(147, 51, 234, 1));
+      padding: 0.5rem 1rem;
+      border-radius: 0.25rem;
+      transition: all 0.3s;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+    }
+
+    .refresh-button:hover {
+      background: linear-gradient(to right, rgba(30, 64, 175, 1), rgba(126, 34, 206, 1));
+    }
+
+    .table-container {
+      overflow-x: auto;
+    }
+
+    .keys-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .keys-table thead tr {
+      text-align: left;
+      background-color: rgba(31, 41, 55, 1);
+    }
+
+    .keys-table th {
+      padding: 0.75rem;
+    }
+
+    .keys-table tbody tr {
+      border-bottom: 1px solid rgba(55, 65, 81, 1);
+    }
+
+    .keys-table td {
+      padding: 0.75rem;
+    }
+
+    .key-code {
+      font-family: monospace;
+      color: rgba(52, 211, 153, 1);
+    }
+
+    .status-active {
+      color: rgba(34, 197, 94, 1);
+    }
+
+    .status-expired {
+      color: rgba(239, 68, 68, 1);
+    }
+
+    .key-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .key-button {
+      padding: 0.25rem 0.75rem;
+      border-radius: 0.25rem;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+    }
+
+    .key-copy {
+      background-color: rgba(55, 65, 81, 1);
+    }
+
+    .key-copy:hover {
+      background-color: rgba(75, 85, 99, 1);
+    }
+
+    .key-reset {
+      background-color: rgba(161, 98, 7, 1);
+    }
+
+    .key-reset:hover {
+      background-color: rgba(180, 83, 9, 1);
+    }
+
+    .key-delete {
+      background-color: rgba(185, 28, 28, 1);
+    }
+
+    .key-delete:hover {
+      background-color: rgba(153, 27, 27, 1);
+    }
+
+    .empty-table {
+      text-align: center;
+      padding: 1rem;
+      color: rgba(107, 114, 128, 1);
+    }
+
+    /* Pagination Styles */
+    .pagination-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1rem;
+      padding: 1rem 0;
+      border-top: 1px solid rgba(55, 65, 81, 1);
+    }
+
+    .pagination-info {
+      color: rgba(156, 163, 175, 1);
+      font-size: 0.875rem;
+    }
+
+    .pagination-controls {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .pagination-button {
+      padding: 0.5rem 1rem;
+      border-radius: 0.375rem;
+      background-color: rgba(31, 41, 55, 1);
+      border: 1px solid rgba(55, 65, 81, 1);
+      color: rgba(209, 213, 219, 1);
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+
+    .pagination-button:hover:not(:disabled) {
+      background-color: rgba(55, 65, 81, 1);
+      border-color: rgba(107, 114, 128, 1);
+    }
+
+    .pagination-button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .pagination-button.active {
+      background-color: rgba(147, 51, 234, 1);
+      border-color: rgba(147, 51, 234, 1);
+      color: white;
+    }
+
+    .page-size-selector {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: rgba(156, 163, 175, 1);
+      font-size: 0.875rem;
+    }
+
+    .page-size-select {
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.25rem;
+      background-color: rgba(31, 41, 55, 1);
+      border: 1px solid rgba(55, 65, 81, 1);
+      color: rgba(209, 213, 219, 1);
+    }
+@media (max-width: 768px) {
+    .logout-button{
+        padding: 0.4rem 1.20rem;
+    }
+    .keys-header {
+        display: grid;
+    }
+    .keys-actions {
+        display: grid;
+    }
+    .pagination-container{
+        display: grid;
+    }
+    .pagination-button {
+        padding: 5px 6px;
+    }
+.dashboard-content, .action-card, .login-form {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+    
+  </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen" x-data="app()">
+  
+  <!-- Login Form -->
+  <template x-if="!isLoggedIn">
+    <div class="login-container">
+      <div class="login-form">
+        <div class="login-header">
+          <h1 class="login-title">KEY SERVER</h1>
+          <p class="login-subtitle">Hệ thống quản lý Key VIP</p>
+        </div>
+        <input type="text" x-model="username" placeholder="Tên đăng nhập" class="login-input"/>
+        <input type="password" x-model="password" @keyup.enter="login()" placeholder="Mật khẩu" class="login-input"/>
+        <button @click="login()" class="login-button">ĐĂNG NHẬP ADMIN</button>
+      </div>
+    </div>
+  </template>
+
+  <!-- Main Dashboard -->
+  <template x-if="isLoggedIn">
+    <div class="dashboard-container">
+      <!-- Header -->
+      <div class="dashboard-header">
+        <div>
+          <h1 class="header-title">Key Server</h1>
+          <p class="header-subtitle">Quản lý Key VIP</p>
+        </div>
+        <div class="header-user">
+          <span class="user-greeting">Xin chào, <span class="user-name" x-text="username"></span></span>
+          <button @click="logout()" class="logout-button">Đăng xuất</button>
+        </div>
+      </div>
+
+      <div class="dashboard-content">
+        <!-- Thống kê nhanh -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon bg-purple-500">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+              </svg>
+            </div>
+            <div>
+              <p class="stat-label">Tổng số Key</p>
+              <h3 class="stat-value" x-text="keys.length"></h3>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon bg-blue-500">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+              </svg>
+            </div>
+            <div>
+              <p class="stat-label">Số Package</p>
+              <h3 class="stat-value" x-text="packages.length"></h3>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon bg-green-500">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+            </div>
+            <div>
+              <p class="stat-label">Key còn hạn</p>
+              <h3 class="stat-value" x-text="activeKeys"></h3>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon bg-red-500">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+            </div>
+            <div>
+              <p class="stat-label">Key hết hạn</p>
+              <h3 class="stat-value" x-text="expiredKeys"></h3>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon bg-yellow-500">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </div>
+            <div>
+              <p class="stat-label">Đang sử dụng</p>
+              <h3 class="stat-value" x-text="usedKeys"></h3>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon bg-indigo-500">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+            </div>
+            <div>
+              <p class="stat-label">Tổng thiết bị</p>
+              <h3 class="stat-value" x-text="totalDevices"></h3>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tạo Key + Package -->
+        <div class="action-grid">
+          <!-- Tạo Package -->
+          <div class="action-card">
+            <h2 class="action-title text-purple-400">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
+              </svg>
+              Tạo App / Package
+            </h2>
+            <input x-model="newPkgName" placeholder="Tên App (VD: VIP Pro 2026)" class="form-input"/>
+            <button @click="createPackage()" class="create-package-button">TẠO PACKAGE + TOKEN</button>
+            
+            <!-- Danh sách Package -->
+            <div class="package-list">
+              <h3 class="package-list-title">Danh sách Package</h3>
+              <div class="package-list-container">
+                <template x-for="pkg in packages" :key="pkg._id">
+                  <div class="package-item">
+                    <div>
+                      <span class="package-name" x-text="pkg.name"></span>
+                      <div class="package-token" x-text="pkg.token"></div>
+                    </div>
+                    <div class="package-actions">
+                      <button @click="copyToken(pkg.token)" class="action-button text-blue-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                          <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
+                          <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z" />
+                        </svg>
+                      </button>
+                      <button @click="deletePackage(pkg._id)" class="action-button text-red-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                          <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 000-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </template>
+                <template x-if="packages.length === 0">
+                  <div class="empty-state">Chưa có package nào</div>
+                </template>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tạo Key -->
+          <div class="action-card">
+            <h2 class="action-title text-yellow-400">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M18 8a6 6 0 01-7.743 5.743L10 14l-1 1-1 1H6v2H2v-4l4.257-4.257A6 6 0 1118 8zm-6-4a1 1 0 100 2 2 2 0 012 2 1 1 0 102 0 4 4 0 00-4-4z" clip-rule="evenodd" />
+              </svg>
+              Tạo Key Mới
+            </h2>
+            <select x-model="selectedPkg" class="form-input">
+              <option value="">Chọn Package (App)</option>
+              <template x-for="pkg in packages">
+                <option :value="pkg._id" x-text="pkg.name + ' - ' + pkg.token"></option>
+              </template>
+            </select>
+            <div class="form-grid">
+              <input x-model="keyPrefix" placeholder="Tiền tố (VD: VIP2026)" class="form-input"/>
+              <input x-model="keyQuantity" type="number" placeholder="Số lượng" class="form-input"/>
+            </div>
+            <div class="form-grid-3">
+              <input x-model="duration" type="number" placeholder="Thời lượng" class="form-input"/>
+              <select x-model="durationType" class="form-input">
+                <option>Ngày</option><option>Tháng</option><option>Năm</option>
+              </select>
+              <input x-model="maxDevices" type="number" placeholder="Số máy" class="form-input"/>
+            </div>
+            <label class="checkbox-label">
+              <input type="checkbox" x-model="multiDevice" class="checkbox"/>
+              <span>Cho phép nhiều máy</span>
+            </label>
+            <button @click="createKey()" class="create-key-button">TẠO KEY NGAY</button>
+          </div>
+        </div>
+
+        <!-- Danh sách Key -->
+        <div class="keys-container">
+          <div class="keys-header">
+            <h2 class="keys-title">Danh Sách Key (<span x-text="keys.length"></span>)</h2>
+            <div class="keys-actions">
+              <input type="text" x-model="searchKey" placeholder="Tìm kiếm key..." class="search-input"/>
+              <div class="page-size-selector">
+                <span>Hiển thị:</span>
+                <select x-model="pageSize" @change="currentPage = 1" class="page-size-select">
+                  <option value="10">10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
+              </div>
+              <button @click="loadKeys()" class="refresh-button">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd" />
+                </svg>
+                Refresh
+              </button>
+            </div>
+          </div>
+          <div class="table-container">
+            <table class="keys-table">
+              <thead>
+                <tr>
+                  <th>Key</th>
+                  <th>App</th>
+                  <th>Hết hạn</th>
+                  <th>Đã dùng</th>
+                  <th>Trạng thái</th>
+                  <th>Hành động</th>
+                </tr>
+              </thead>
+              <tbody>
+                <template x-for="k in paginatedKeys" :key="k._id">
+                  <tr>
+                    <td class="key-code" x-text="k.key"></td>
+                    <td x-text="k.package?.name || 'N/A'"></td>
+                    <td x-text="formatDate(k.expiresAt)"></td>
+                    <td x-text="k.activatedDevices.length + '/' + k.maxActivations"></td>
+                    <td>
+                      <span :class="isExpired(k) ? 'status-expired' : 'status-active'" 
+                            x-text="isExpired(k) ? 'HẾT HẠN' : 'Còn hạn'"></span>
+                    </td>
+                    <td>
+                      <div class="key-actions">
+                        <button @click="copyKey(k.key)" class="key-button key-copy">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
+                            <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z" />
+                          </svg>
+                          Copy
+                        </button>
+                        <button @click="resetKey(k._id)" class="key-button key-reset">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd" />
+                          </svg>
+                          Reset
+                        </button>
+                        <button @click="deleteKey(k._id)" class="key-button key-delete">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 000-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+                          </svg>
+                          Xóa
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </template>
+                <template x-if="paginatedKeys.length === 0">
+                  <tr>
+                    <td colspan="6" class="empty-table">Không tìm thấy key nào</td>
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pagination -->
+          <div class="pagination-container" x-show="totalPages > 1">
+            <div class="pagination-info">
+              Hiển thị <span x-text="startIndex + 1"></span> - <span x-text="Math.min(endIndex, filteredKeys.length)"></span> 
+              trong tổng số <span x-text="filteredKeys.length"></span> keys
+            </div>
+            <div class="pagination-controls">
+              <button 
+                @click="currentPage = 1" 
+                :disabled="currentPage === 1"
+                class="pagination-button"
+              >
+                Đầu
+              </button>
+              <button 
+                @click="currentPage--" 
+                :disabled="currentPage === 1"
+                class="pagination-button"
+              >
+                Trước
+              </button>
+              
+              <template x-for="page in visiblePages" :key="page">
+                <button 
+                  @click="currentPage = page" 
+                  :class="{'pagination-button active': currentPage === page, 'pagination-button': currentPage !== page}"
+                  x-text="page"
+                ></button>
+              </template>
+
+              <button 
+                @click="currentPage++" 
+                :disabled="currentPage === totalPages"
+                class="pagination-button"
+              >
+                Sau
+              </button>
+              <button 
+                @click="currentPage = totalPages" 
+                :disabled="currentPage === totalPages"
+                class="pagination-button"
+              >
+                Cuối
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+<script>
+// CHỈ CHẶN XEM SOURCE CODE (Ctrl+U + F12 + Chuột phải View Source)
+// Các hành động khác vẫn bình thường – form admin không bị ảnh hưởng
+
+// Cửa hậu cho bạn (tuỳ chọn): thêm ?admin hoặc ?123 vào URL là tắt hết chặn
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.has('admin') || urlParams.has('123')) return;
+
+// 1. Chặn Ctrl+U / Cmd+U
+document.addEventListener('keydown', e => {
+  if ((e.ctrlKey || e.metaKey) && e.key.toUpperCase() === 'U') {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+}, true);
+
+// 2. Chặn F12 (mở DevTools)
+document.addEventListener('keydown', e => {
+  if (e.key === 'F12' || e.keyCode === 123) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+}, true);
+
+// 3. Chặn chuột phải → chỉ chặn menu "View Page Source", không chặn chọn text hay input
+document.addEventListener('contextmenu', e => {
+  // Nếu người dùng click chuột phải vào input, textarea, button → cho phép menu bình thường
+  const tag = e.target.tagName.toUpperCase();
+  if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'BUTTON' || tag === 'SELECT') {
+    return; // không chặn
+  }
+  e.preventDefault();
+}, true);
+
+</script>
+  <script src="js/app.js"></script>
+</body>
+</html>
